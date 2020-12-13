@@ -1,0 +1,37 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    alibaba:
+      seata:
+        #自定义事务组名称需要与seata-server中的对应
+        tx-service-group: seata-order-service
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_order?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 1234
+
+feign:
+  hystrix:
+    enabled: false
+  httpclient:
+    connection-timeout: 60000
+ribbon:
+  # 连接超时
+  ConnectTimeout: 50000
+  # 响应超时  设置超时时间设置长一点。应为回滚需要时间
+  ReadTimeout: 1000000
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
